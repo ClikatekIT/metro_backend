@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Credentials - never commit these
+*mineral-brand*.json
+*service-account*.json
+*credentials*.json
+*-key.json
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+.env
+.env.*
+
+# Local settings
+settings_local.py
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+.env.bak
+pip-wheel-metadata/
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Claude Code
+.claude/
+
+# Media and audio files
+audios/
+media/
+*.mp3
+*.wav
+
+# mypy, coverage, pytest, etc.
+.mypy_cache/
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# Node/npm if using for front-end
+node_modules/
+*.tsbuildinfo
+
+# System files
+.DS_Store
+Thumbs.db
