@@ -18,6 +18,7 @@ import time
 import uuid
 
 # Configuração da chave da API do OpenAI
+import os
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # --- Funções Auxiliares ---

@@ -2,30 +2,24 @@
 import os
 
 from pathlib import Path
-import os
 from dotenv import load_dotenv
-import os
-
 from decouple import config
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(os.path.dirname(__file__), "mineral-brand-445417-v2-fd4c4b38aa6b.json")
 
-# Carrega as variáveis do arquivo .env
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+GOOGLE_CREDENTIALS_PATH = os.environ.get(
+    "GOOGLE_APPLICATION_CREDENTIALS",
+    os.path.join(os.path.dirname(__file__), "mineral-brand-445417-v2-fd4c4b38aa6b.json"),
+)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = GOOGLE_CREDENTIALS_PATH
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+SECRET_KEY = config("SECRET_KEY", default="django-insecure-^5!i^3aa$k$q&=^-y%9@yqmk$-fy0#&udnlns*!=1lpoug5e3u")
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^5!i^3aa$k$q&=^-y%9@yqmk$-fy0#&udnlns*!=1lpoug5e3u"
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="api.metrojobs.co.mz,localhost,127.0.0.1", cast=lambda v: [s.strip() for s in v.split(",")])
 
 PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
 PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET")
@@ -51,6 +45,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://api.metrojobs.co.mz",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -142,33 +137,33 @@ WSGI_APPLICATION = "metrojobs_django.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "metro",
-#         "USER": "metro",
-#         "PASSWORD": "metro_2024",
-#         "HOST": "104.248.53.102",  
-#         "PORT": "5432",
-#         "OPTIONS": {
-#             "connect_timeout": 300,  
-#         },
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'metro',  
-        'USER': 'postgres',  
-        'PASSWORD': 'Milaboss33',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("DB_NAME", default="metro"),
+        "USER": config("DB_USER", default="metro"),
+        "PASSWORD": config("DB_PASSWORD", default="metro_2024"),
+        "HOST": config("DB_HOST", default="24.199.100.234"),
+        "PORT": config("DB_PORT", default="5432"),
         "OPTIONS": {
-            "connect_timeout": 300,  # Timeout de 10 segundos
+            "connect_timeout": 300,
         },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'metro',  
+#         'USER': 'postgres',  
+#         'PASSWORD': 'Milaboss33',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#         "OPTIONS": {
+#             "connect_timeout": 300,  # Timeout de 10 segundos
+#         },
+#     }
+# }
 AUTH_USER_MODEL = "curriculum.User"
 
 
@@ -242,6 +237,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
