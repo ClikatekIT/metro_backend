@@ -167,7 +167,7 @@ DATABASES = {
 AUTH_USER_MODEL = "curriculum.User"
 
 
-# Password validation
+# Password validation_
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
