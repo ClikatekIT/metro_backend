@@ -44,7 +44,7 @@ h11==0.14.0
 httpcore==1.0.6
 httpx==0.27.2
 idna==3.10
-# integration-portal @ file:///C:/project/metro-django/portal-sdk
+./portal-sdk
 itsdangerous==2.2.0
 Jinja2==3.1.6
 jiter==0.7.0
