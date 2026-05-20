@@ -64,6 +64,10 @@ paypal-server-sdk==1.0.0
 paypalhttp==1.0.1
 paypalrestsdk==1.13.3
 pdfkit==1.0.0
+pydub==0.25.1
+PyPDF2==3.0.1
+python-docx==1.1.2
+matplotlib==3.10.1
 pillow==11.1.0
 platformdirs==4.3.6
 propcache==0.3.0
