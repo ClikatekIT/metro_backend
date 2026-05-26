@@ -360,9 +360,10 @@ class CreditSerializer(serializers.ModelSerializer):
             credito.save()
 
             # Criar transação
+            tipo_compra, _ = TipoTransacao.objects.get_or_create(nome="Compra de crédito")
             transacao = Transacao.objects.create(
                 user=credito.user,
-                tipo=TipoTransacao.objects.get(nome="Compra de crédito"),
+                tipo=tipo_compra,
                 valor=valor_pago_mzn,
                 referencia=referencia,
                 credit=credito
@@ -415,7 +416,7 @@ class UsoCreditoSerializer(serializers.Serializer):
             taxa_conversao = Decimal("25.00")  # valor unitário padrão no uso
             valor_mzn = valor_creditos * taxa_conversao
 
-            tipo_transacao = TipoTransacao.objects.get(nome="Uso de crédito")
+            tipo_transacao, _ = TipoTransacao.objects.get_or_create(nome="Uso de crédito")
             transacao = Transacao.objects.create(
                 user=user,
                 tipo=tipo_transacao,

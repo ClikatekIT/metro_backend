@@ -46,16 +46,17 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://api.metrojobs.co.mz",
+    "https://metro.metrojobs.co.mz",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_COOKIE_NAME = "csrftoken"
-CSRF_COOKIE_SECURE = False  # Defina como True se estiver usando HTTPS
-CSRF_COOKIE_HTTPONLY = False  # Certifique-se de que o cookie não está sendo bloqueado
+CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", default=False, cast=bool)
+CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = "Lax"
-SESSION_COOKIE_SECURE = False  # Defina como True se estiver usando HTTPS
+SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", default=False, cast=bool)
 
 
 CORS_ALLOW_HEADERS = [
