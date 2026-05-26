@@ -76,6 +76,7 @@ class InterviewAPIView(APIView):
                 question = Question.objects.create(interview=interview, text=text)
                 audio_filename = f"question_{question.id}.mp3"
                 audio_path = os.path.join(audio_dir, audio_filename)
+                audio_rel_path = f"audios/{audio_filename}"
 
                 # Geração do áudio usando Google Cloud Text-to-Speech
                 client = texttospeech.TextToSpeechClient()
@@ -91,7 +92,7 @@ class InterviewAPIView(APIView):
                 with open(audio_path, "wb") as audio_file:
                     audio_file.write(response_audio.audio_content)
 
-                question.audio_path = audio_path
+                question.audio_path = audio_rel_path
                 question.save()
                 serialized_questions.append(question)
 
@@ -191,14 +192,15 @@ class AnswerQuestionAPIView(APIView):
                         feedback=feedback
                     )
 
+                    media_url = settings.MEDIA_URL
                     return Response(
                         {
                             "feedback": feedback,
                             "transcription": response_text,
                             "ideal": resposta_ideal,
                             "rating": classificacao,
-                            "feedback_audio": response_analysis.get("feedback_audio"),
-                            "ideal_audio": response_analysis.get("ideal_audio")
+                            "feedback_audio": f"{media_url}{response_analysis.get('feedback_audio')}",
+                            "ideal_audio": f"{media_url}{response_analysis.get('ideal_audio')}"
                         },
                         status=status.HTTP_200_OK,
                     )

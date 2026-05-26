@@ -1,6 +1,7 @@
 
 import openai
 from google.cloud import texttospeech
+from django.conf import settings
 import os
 import re
 import logging
@@ -75,11 +76,11 @@ def analyze_response(question_text, response_text, question_id):
 
     # Gerar áudios
     client = texttospeech.TextToSpeechClient()
-    audio_dir = "media/feedback_audio"
-    os.makedirs(audio_dir, exist_ok=True)
+    audio_abs_dir = os.path.join(settings.MEDIA_ROOT, "feedback_audio")
+    os.makedirs(audio_abs_dir, exist_ok=True)
 
-    feedback_audio_path = os.path.join(audio_dir, "feedback.mp3")
-    ideal_audio_path = os.path.join(audio_dir, f"ideal_response_{question_id}.mp3")
+    feedback_audio_path = os.path.join(audio_abs_dir, "feedback.mp3")
+    ideal_audio_path = os.path.join(audio_abs_dir, f"ideal_response_{question_id}.mp3")
 
     def generate_audio(text, path):
         if text and text != "N/A":
@@ -99,8 +100,8 @@ def analyze_response(question_text, response_text, question_id):
 
     return {
         "feedback_text": feedback,
-        "feedback_audio": feedback_audio_path,
+        "feedback_audio": f"feedback_audio/feedback.mp3",
         "ideal_text": resposta_ideal,
-        "ideal_audio": ideal_audio_path,
+        "ideal_audio": f"feedback_audio/ideal_response_{question_id}.mp3",
         "rating": classificacao
     }
