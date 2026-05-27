@@ -214,7 +214,7 @@ class PersonalInfo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cv = models.OneToOneField(
         "CV", on_delete=models.CASCADE, related_name="personal_info", blank=True, null=True)
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=50)
     birth_date = models.DateField()
     name= models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField()
